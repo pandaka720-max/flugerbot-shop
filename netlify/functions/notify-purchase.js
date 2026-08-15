@@ -70,21 +70,21 @@ exports.handler = async (event) => {
           text: lines.join("\n"),
           parse_mode: "HTML",
           reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: "❌ Оплата не найдена",
-                  callback_data: `payment_not_found:${orderId}`
-                }
-              ],
-              [
-                {
-                  text: "✅ Заказ выдан",
-                  callback_data: `order_delivered:${orderId}`
-                }
-              ]
-            ]
-          }
+  inline_keyboard: [
+    [
+      {
+        text: "❌ Оплата не найдена",
+        callback_data: `order:no:${order.username}`
+      }
+    ],
+    [
+      {
+        text: "✅ Заказ выдан",
+        callback_data: `order:ok:${order.username}:${order.type}:${order.rub || "0"}`
+      }
+    ]
+  ]
+}
         })
       }
     );
