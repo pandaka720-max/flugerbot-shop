@@ -1,5 +1,3 @@
-const { getStore } = require("@netlify/blobs");
-
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return {
@@ -32,23 +30,12 @@ exports.handler = async (event) => {
       };
     }
 
-    // Уникальный ID заказа
     const orderId =
       Date.now().toString(36) +
       Math.random().toString(36).substring(2, 8);
 
-    // Сохраняем заказ
-    const store = getStore("purchase-orders");
-
-    await store.setJSON(`order-${orderId}`, {
-      ...order,
-      orderId,
-      status: "pending",
-      createdAt: order.createdAt || new Date().toLocaleString("ru-RU")
-    });
-
     const lines = [
-      "🛒 <b>Новая заявка на покупку</b>",
+      "🛒 <b>Новый заказ</b>",
       "",
       `📦 Товар: <b>${escapeHtml(order.type)}</b>`,
       order.quantity
@@ -63,9 +50,7 @@ exports.handler = async (event) => {
       order.usd
         ? `💵 USD: <b>${escapeHtml(order.usd)}</b>`
         : null,
-      `💳 Способ оплаты: <b>${escapeHtml(
-        order.paymentMethod || "Не указан"
-      )}</b>`,
+      `💳 Оплата: <b>${escapeHtml(order.paymentMethod || "Не указана")}</b>`,
       `👤 Username: <b>${escapeHtml(order.username)}</b>`,
       `🆔 Заказ: <code>${orderId}</code>`,
       `🕐 Время: <b>${escapeHtml(
@@ -126,7 +111,7 @@ exports.handler = async (event) => {
     };
 
   } catch (error) {
-    console.error(error);
+    console.error("FUNCTION ERROR:", error);
 
     return {
       statusCode: 500,
