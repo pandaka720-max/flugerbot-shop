@@ -45,10 +45,10 @@ exports.handler = async (event) => {
         ? `💎 Период: <b>${escapeHtml(order.period)}</b>`
         : null,
       order.rub
-        ? `💰 Сумма: <b>${escapeHtml(order.rub)}</b>`
+        ? `💰 Цена в рублях: <b>${escapeHtml(order.rub)}</b>`
         : null,
       order.usd
-        ? `💵 USD: <b>${escapeHtml(order.usd)}</b>`
+        ? `💵 Цена в USDT: <b>${escapeHtml(order.usd)}</b>`
         : null,
       `💳 Оплата: <b>${escapeHtml(order.paymentMethod || "Не указана")}</b>`,
       `👤 Username: <b>${escapeHtml(order.username)}</b>`,
